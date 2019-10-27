@@ -1,0 +1,4 @@
+---
+# URL from where the keys will be collected.
+# Defaults to github but can be used with gitlab from version 6.0.0+
+git_repository_url: https://github.com

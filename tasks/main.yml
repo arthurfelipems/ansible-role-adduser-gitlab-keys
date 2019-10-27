@@ -1,0 +1,44 @@
+---
+# tasks file for ansible_role_adduser_gitkeys
+- name: "Add user {{ item.username }}"
+  user:
+    name: "{{ item.username }}"
+    group: "{{ item.username }}"
+    groups: "{{ item.user_groups }}"
+
+  when: item.user_groups is defined
+
+- name: "Add user {{ item.username }}"
+  user:
+    name: "{{ item.username }}"
+    group: "{{ item.username }}"
+  when: item.user_groups is undefined
+
+- name: Create .ssh directory
+  file:
+    path: /home/{{ item.username }}/.ssh
+    state: directory
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: '0700'
+
+- name: "Get {{ item.username }}'s keys from {{ git_repository_url }}"
+  get_url:
+    force: yes
+    url: "{{ git_repository_url }}/{{ item.gituser }}.keys"
+    dest: "/home/{{ item.username }}/.ssh/authorized_keys"
+  when: item.gituser is defined
+
+- name: "Get {{ item.username }}'s keys from {{ git_repository_url }}"
+  get_url:
+    force: yes
+    url: "{{ git_repository_url }}/{{ item.username }}.keys"
+    dest: "/home/{{ item.username }}/.ssh/authorized_keys"
+  when: item.gituser is undefined
+
+- name: Change Keys permission and ownership
+  file:
+    path: "/home/{{ item.username }}/.ssh/authorized_keys"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: '0400'

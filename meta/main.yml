@@ -1,0 +1,24 @@
+--- 
+galaxy_info: 
+  author: arthurfelipems
+  dependencies: []
+  description: "GNU/Linux users and SSH-Keys from github/gitlab user keys."
+  galaxy_tags: 
+    - users
+    - groups
+    - ssh
+    - system
+    - keypair
+  license: "license (MIT)"
+  min_ansible_version: 2.4
+  platforms: 
+    - name: EL
+      versions: 
+        - all
+    - name: Debian
+      versions: 
+        - all
+    - name: Ubuntu
+      versions: 
+        - all
+  role_name: adduser_gitkeys
