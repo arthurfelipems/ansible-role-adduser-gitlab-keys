@@ -3,16 +3,13 @@
 - name: "Add user {{ item.username }}"
   user:
     name: "{{ item.username }}"
-    group: "{{ item.username }}"
-    groups: "{{ item.user_groups }}"
 
-  when: item.user_groups is defined
-
-- name: "Add user {{ item.username }}"
+- name: "Add user to groups {{ item.user_groups }}"
   user:
     name: "{{ item.username }}"
     group: "{{ item.username }}"
-  when: item.user_groups is undefined
+    groups: "{{ item.user_groups }}"
+  when: item.user_groups is defined
 
 - name: Create .ssh directory
   file:
